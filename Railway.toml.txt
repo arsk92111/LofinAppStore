@@ -1,2 +1,7 @@
 [build]
-nixpacksPkgs = ["gdal", "proj", "geos"]
+nixpacksPkgs = ["gdal", "proj", "geos"] 
+builder = "NIXPACKS"
+buildCommand = "pip install -r requirements.txt"
+
+[variables]
+PYTHON_VERSION = "3.11.9"
