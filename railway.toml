@@ -1,6 +1,24 @@
 [build]
 builder = "NIXPACKS"
-nixpacksPkgs = ["gdal", "proj", "geos"]
 
-[variables]
-PYTHON_VERSION = "3.11.9"
+[env]
+PYTHONUNBUFFERED = "1"
+
+[build.nixpacks]
+phases.setup.packages = [
+  "python313",
+  "gdal",
+  "geos",
+  "proj",
+  "gcc",
+  "g++"
+]
+
+phases.install.cmds = [
+  "python -m venv --copies /opt/venv",
+  ". /opt/venv/bin/activate",
+  "pip install -r requirements.txt"
+]
+
+[start]
+cmd = "gunicorn LofinAppStore.wsgi"
