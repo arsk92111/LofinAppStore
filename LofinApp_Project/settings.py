@@ -28,8 +28,12 @@ SECRET_KEY = "django-insecure-l*b5-bcq1v_=23j!7v#vpfbs6vi=hlo!wzvgy@*r-7w0axs_4#
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True 
+# DEBUG = False
+ALLOWED_HOSTS = ["*"]  # later replace * with your actual domain
 
-ALLOWED_HOSTS = ['*']
+DEBUG = False
+ALLOWED_HOSTS = ["*"]  # later replace * with your actual domain
+
 
 BASE_URL = "http://localhost:8000"
  
@@ -129,7 +133,8 @@ USE_TZ = False
 
 
 STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
+MEDIA_URL = '/media/' 
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'statics')
