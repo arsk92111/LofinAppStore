@@ -1,18 +1,33 @@
+# Use the official Python image
 FROM python:3.13-slim
 
+# Set working directory
 WORKDIR /app
-COPY . /app/
 
-# Install system dependencies for mysqlclient 
+# Install system dependencies (including GDAL)
 RUN apt-get update && apt-get install -y \
-    default-libmysqlclient-dev \
+    gdal-bin \
+    libgdal-dev \
+    gcc \
+    g++ \
     build-essential \
     pkg-config \
+    python3-dev \
+    libproj-dev \
+    libgeos-dev \
     && rm -rf /var/lib/apt/lists/*
 
+# Copy project files
+COPY . /app/
+
+# Create virtual environment and install dependencies
 RUN python -m venv /opt/venv && \
     . /opt/venv/bin/activate && \
     pip install --upgrade pip && \
     pip install -r requirements.txt
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# Expose port
+EXPOSE 8000
+
+# Start Gunicorn server
+CMD ["bash", "-c", ". /opt/venv/bin/activate && gunicorn LofinApp_Project.wsgi:application --bind 0.0.0.0:8000"]
