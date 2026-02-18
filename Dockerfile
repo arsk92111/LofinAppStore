@@ -29,5 +29,5 @@ RUN python -m venv /opt/venv && \
 # Expose port
 EXPOSE 8000
 
-# Start Gunicorn server
-CMD ["bash", "-c", ". /opt/venv/bin/activate && gunicorn LofinApp_Project.wsgi:application --bind 0.0.0.0:8000"]
+ENV PATH="/opt/venv/bin:$PATH"
+CMD ["gunicorn", "LofinApp_Project.wsgi:application", "--bind", "0.0.0.0:8000"]
